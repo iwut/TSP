@@ -21,6 +21,10 @@ public class Main {
 
 		path = algorithm.findPath(path);
 
+		TwoOpt twoOpt = new TwoOpt();
+
+		path = twoOpt.optimizePath(path);
+
 		printPath(path);
 	}
 
