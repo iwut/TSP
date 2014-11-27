@@ -1,7 +1,9 @@
 public class GreedyAlgorithm implements Algorithm {
 
 	@Override
-	public Node[] findPath(Node[] nodes) {
+	public Path findPath(Path oldPath) {
+
+		Node[] nodes = oldPath.getNodes();
 
 		int length = nodes.length;
 		Node[] path = new Node[length];
@@ -15,8 +17,8 @@ public class GreedyAlgorithm implements Algorithm {
 			best = -1;
 			for (int j = 0; j < length; j++) {
 				if (!used[j]
-						&& (best == -1 || path[i - 1].calculateDistanceToNode(nodes[j]) < path[i - 1]
-								.calculateDistanceToNode(nodes[best]))) {
+						&& (best == -1 || oldPath.calculateDistanceBetweenNodes(path[i - 1], nodes[j]) < oldPath
+								.calculateDistanceBetweenNodes(path[i - 1], nodes[best]))) {
 					best = j;
 				}
 			}
@@ -25,7 +27,7 @@ public class GreedyAlgorithm implements Algorithm {
 
 		}
 
-		return path;
+		return new Path(path);
 	}
 
 }

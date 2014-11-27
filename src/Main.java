@@ -15,16 +15,19 @@ public class Main {
 
 		Node[] nodes = in.readIndata(br);
 
+		Path path = new Path(nodes);
+
 		Algorithm algorithm = new GreedyAlgorithm();
 
-		Node[] path = algorithm.findPath(nodes);
+		path = algorithm.findPath(path);
 
 		printPath(path);
 	}
 
-	private void printPath(Node[] path) {
-		for (int i = 0; i < path.length; i++) {
-			System.out.println(path[i].getNumber());
+	private void printPath(Path path) {
+		Node[] nodes = path.getNodes();
+		for (int i = 0; i < nodes.length; i++) {
+			System.out.println(nodes[i].getNumber());
 		}
 	}
 

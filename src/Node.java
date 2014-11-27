@@ -23,11 +23,4 @@ public class Node {
 		return number;
 	}
 
-	public double calculateDistanceToNode(Node node) {
-		double absX = Math.abs(x - node.getX());
-		double absY = Math.abs(y - node.getY());
-
-		return Math.sqrt(absX * absX + absY * absY);
-	}
-
 }
