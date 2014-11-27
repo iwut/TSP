@@ -1,13 +1,13 @@
 public class GreedyAlgorithm implements Algorithm {
 
 	@Override
-	public int[] findPath(Node[] nodes) {
+	public Node[] findPath(Node[] nodes) {
 
 		int length = nodes.length;
-		int[] path = new int[length];
+		Node[] path = new Node[length];
 		boolean[] used = new boolean[length];
 
-		path[0] = 0;
+		path[0] = nodes[0];
 		used[0] = true;
 
 		int best;
@@ -15,23 +15,17 @@ public class GreedyAlgorithm implements Algorithm {
 			best = -1;
 			for (int j = 0; j < length; j++) {
 				if (!used[j]
-						&& (best == -1 || dist(nodes[path[i - 1]], nodes[j]) < dist(nodes[path[i - 1]], nodes[best]))) {
+						&& (best == -1 || path[i - 1].calculateDistanceToNode(nodes[j]) < path[i - 1]
+								.calculateDistanceToNode(nodes[best]))) {
 					best = j;
 				}
 			}
-			path[i] = best;
+			path[i] = nodes[best];
 			used[best] = true;
 
 		}
 
 		return path;
-	}
-
-	private double dist(Node first, Node second) {
-		double absX = Math.abs(first.getX() - second.getX());
-		double absY = Math.abs(first.getY() - second.getY());
-
-		return Math.sqrt(absX * absX + absY * absY);
 	}
 
 }

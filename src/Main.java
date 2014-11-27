@@ -8,6 +8,7 @@ public class Main {
 	}
 
 	public Main() {
+
 		InputReader in = new InputReader();
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,14 +17,14 @@ public class Main {
 
 		Algorithm algorithm = new GreedyAlgorithm();
 
-		int[] path = algorithm.findPath(nodes);
+		Node[] path = algorithm.findPath(nodes);
 
 		printPath(path);
 	}
 
-	private void printPath(int[] path) {
+	private void printPath(Node[] path) {
 		for (int i = 0; i < path.length; i++) {
-			System.out.println(path[i]);
+			System.out.println(path[i].getNumber());
 		}
 	}
 

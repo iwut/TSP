@@ -27,7 +27,7 @@ public class InputReader {
 				x = Double.parseDouble(coords[0]);
 				y = Double.parseDouble(coords[1]);
 
-				nodes[i] = new Node(x, y);
+				nodes[i] = new Node(x, y, i);
 
 				// i++;
 			}
