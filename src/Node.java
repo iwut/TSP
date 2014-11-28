@@ -1,14 +1,16 @@
 public class Node {
 
-	private double	x;
-	private double	y;
+	public double	x;
+	public double	y;
+	public double distanceToNext;
 
-	private int		number;
+	public int		number;
 
-	public Node(double x, double y, int number) {
+	public Node(double x, double y, int number, double distanceToNext) {
 		this.x = x;
 		this.y = y;
 		this.number = number;
+		this.distanceToNext = distanceToNext;
 	}
 
 	public double getX() {
@@ -22,5 +24,13 @@ public class Node {
 	public int getNumber() {
 		return number;
 	}
+	
+	public void setDistanceToNext(double distance) {
+		this.distanceToNext = distance;
+	}
 
+	public double getDistanceToNext() {
+		return distanceToNext;
+	}
+	
 }

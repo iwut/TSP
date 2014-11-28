@@ -9,21 +9,20 @@ public class Main {
 
 	public Main() {
 
+		Kattio io = new Kattio(System.in);
 		InputReader in = new InputReader();
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		Node[] nodes = in.readIndata(br);
-
-		Path path = new Path(nodes);
+		Path path = in.readIndata(br);
 
 		Algorithm algorithm = new GreedyAlgorithm();
 
 		path = algorithm.findPath(path);
-
-		TwoOpt twoOpt = new TwoOpt();
-
-		path = twoOpt.optimizePath(path);
+		
+		 TwoOpt twoOpt = new TwoOpt();
+		
+		 path = twoOpt.optimizePath(path);
 
 		printPath(path);
 	}
