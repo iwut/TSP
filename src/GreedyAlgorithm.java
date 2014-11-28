@@ -27,13 +27,6 @@ public class GreedyAlgorithm implements Algorithm {
 
 		}
 
-		
-		for (int i = 0; i < path.length; i++) {
-			if (i == path.length - 1) {
-				break;
-			}
-			path[i].setDistanceToNext(oldPath.calculateDistanceBetweenNodes(path[i], path[i+1]));
-		}
 		return new Path(path);
 	}
 
