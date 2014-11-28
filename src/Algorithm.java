@@ -7,5 +7,5 @@ public interface Algorithm {
 	 *            set of nodes that the graph is made out of
 	 * @return integer array consisting of node visit order
 	 */
-	public Path findPath(Path path);
+	public Path findPath(Path path, DistanceHolder distances);
 }

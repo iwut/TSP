@@ -5,6 +5,7 @@ public class InputReader {
 	public Path readIndata(BufferedReader in) {
 
 		int nodeAmount = 0;
+
 		try {
 			nodeAmount = Integer.parseInt(in.readLine());
 		} catch (Exception e) {
@@ -15,8 +16,8 @@ public class InputReader {
 
 		String line;
 		String[] coords;
-		double x;
-		double y;
+		int x;
+		int y;
 		// int i = 0;
 
 		try {
@@ -25,8 +26,8 @@ public class InputReader {
 				line = in.readLine();
 				coords = line.split(" ");
 
-				x = Double.parseDouble(coords[0]);
-				y = Double.parseDouble(coords[1]);
+				x = (int) Double.parseDouble(coords[0]);
+				y = (int) Double.parseDouble(coords[1]);
 
 				nodes[i] = new Node(x, y, i, -1);
 
@@ -38,15 +39,6 @@ public class InputReader {
 
 		Path path = new Path(nodes);
 
-		// for (int i = 0; i < nodes.length; i++) {
-		// Node node = nodes[i];
-		// double distance = 0;
-		// if (i != nodeAmount - 1) {
-		// distance = path.calculateDistanceBetweenNodes(node, nodes[i + 1]);
-		// }
-		// node.setDistanceToNext(distance);
-		// }
-
 		return path;
 	}
 
@@ -56,16 +48,16 @@ public class InputReader {
 
 		Node[] nodes = new Node[nodeAmount];
 
-		double x;
-		double y;
+		int x;
+		int y;
 
 		int i = 0;
 		while (in.hasMoreTokens()) {
 			if (i == 999) {
 				String h = "";
 			}
-			x = in.getDouble();
-			y = in.getDouble();
+			x = (int) in.getDouble();
+			y = (int) in.getDouble();
 			nodes[i] = new Node(x, y, i, -1);
 			i++;
 

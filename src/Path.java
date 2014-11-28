@@ -1,5 +1,6 @@
 public class Path {
 	public Node[]	nodes;
+	public int		distance;
 
 	public Path(Node[] nodes) {
 		this.nodes = nodes;
@@ -20,7 +21,7 @@ public class Path {
 		double length = 0;
 
 		for (int i = 0; i < nodes.length; i++) {
-			length += nodes[i].distanceToNext;
+			length += nodes[i].number;
 		}
 
 		// for (int i = 1; i < nodes.length; i++) {

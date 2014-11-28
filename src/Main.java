@@ -16,13 +16,16 @@ public class Main {
 
 		Path path = in.readIndata(br);
 
+		DistanceHolder distanceHolder = new DistanceHolder();
+		distanceHolder.calculateDistances(path);
+
 		Algorithm algorithm = new GreedyAlgorithm();
 
-		path = algorithm.findPath(path);
+		path = algorithm.findPath(path, distanceHolder);
 
 		TwoOpt twoOpt = new TwoOpt();
 
-		path = twoOpt.optimizePath(path);
+		path = twoOpt.optimizePath(path, distanceHolder);
 
 		printPath(path);
 	}
