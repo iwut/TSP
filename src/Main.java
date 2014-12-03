@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 public class Main {
 
@@ -12,6 +13,9 @@ public class Main {
 	}
 
 	public Main() {
+		
+
+		
 		
 		long starttime = System.currentTimeMillis();
 		
@@ -44,14 +48,19 @@ public class Main {
 		//Path path = new Path(nodes);
 
 
-		Algorithm algorithm = new GreedyAlgorithm();
+		//Algorithm algorithm = new GreedyAlgorithm();
 
-		path = algorithm.findPath(path, distanceHolder);
+		//path = algorithm.findPath(path, distanceHolder);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		visual.updatePath(path);
+		ThreeOpt threeOpt = new ThreeOpt(visual, VISUALIZE);
 
-
-		TwoOpt twoOpt = new TwoOpt();
-
-		path = twoOpt.optimizePath(path, distanceHolder);
+		path = threeOpt.optimizePath(path, distanceHolder);
 
 		if(VISUALIZE)
 			//System.out.print(visual);
