@@ -2,6 +2,8 @@ public class Path {
 	public Node[]	nodes;
 	public int		distance;
 
+	public int[]	intNodes;
+
 	public Path(Node[] nodes) {
 		this.nodes = nodes;
 	}

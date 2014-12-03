@@ -1,4 +1,41 @@
+import java.util.Arrays;
+
 public class TwoOpt {
+
+	private int	MAX_ITERATIONS	= 245;
+
+	public Path optimizePath2(Path path, int[][] distances) {
+
+		Node[] nodes = path.nodes;
+
+		int skipped = 0;
+
+		int bestDistance = path.distance;
+		int diff = -1;
+		int iterations = 0;
+		outerloop: while (diff < 0 && iterations < MAX_ITERATIONS) {
+			iterations++;
+
+			for (int i = 0; i < nodes.length; i++) {
+				for (int k = i + 1; k < nodes.length; k++) {
+
+					boolean bool = twoOptSwap3(path, i, k, distances);
+					diff = path.distance - bestDistance;
+					if (bool) {
+						bestDistance = path.distance;
+						continue outerloop;
+					}
+
+				}
+			}
+
+		}
+		;
+
+		System.err.println("Iterations: " + iterations);
+		System.err.println("Skipped: " + skipped);
+		return path;
+	}
 
 	public Path optimizePath(Path path, DistanceHolder distances) {
 
@@ -12,59 +49,80 @@ public class TwoOpt {
 
 		double bestDistance = path.distance;
 		double newDistance = Integer.MAX_VALUE;
-		double diff = 0;
+		double diff = Integer.MAX_VALUE;
 		outerloop: do {
-			// printPathToSystemErr(path);
 
 			for (int i = 0; i < nodes.length; i++) {
 				for (int k = i + 1; k < nodes.length; k++) {
 					int j = i - 1;
-					int l = k + 1;
-					if (k == nodes.length - 1 || i == 0) {
-						// continue as normal
+					if (i == 0) {
+						j = nodes.length - 1;
+					}
 
-					} else if (!(distances.getDistance(nodes[i], nodes[l]) < distances.getDistance(nodes[i], nodes[j]) || distances
+					int l = k + 1;
+					if (k == nodes.length - 1) {
+						l = 0;
+					}
+					if (!(distances.getDistance(nodes[i], nodes[l]) < distances.getDistance(nodes[i], nodes[j]) || distances
 							.getDistance(nodes[k], nodes[j]) < distances.getDistance(nodes[k], nodes[l]))) {
 
 						skipped++;
 						continue;
 
 					}
-					newPath = twoOptSwap(path, i, k, distances);
-					newDistance = newPath.distance;
-					diff = newDistance - bestDistance;
-					if (newDistance < bestDistance) {
 
-						bestDistance = newDistance;
-						path = newPath;
-						nodes = newPath.nodes;
+					boolean bool = twoOptSwap2(path, i, k, distances);
+					diff = path.distance - bestDistance;
+					if (bool) {
+
+						// System.err.println(diff);
+						// nodes = path.nodes;
+						bestDistance = path.distance;
 						continue outerloop;
 					}
+
 				}
 			}
+
 		} while (diff < 0);
 
 		System.err.println("Skipped: " + skipped);
-		// System.err.println();
 		return path;
 	}
 
 	private Path twoOptSwap(Path oldPath, int first, int second, DistanceHolder distances) {
-		// int[][] distances = distanceHolder.distances;
+
+		int distance = oldPath.distance;
 
 		Node[] oldNodes = oldPath.nodes;
 		Node[] newNodePath = new Node[oldNodes.length];
 
-		int distance = 0;
+		if (first == 0) {
+			distance -= distances.getDistance(oldNodes[first], oldNodes[oldNodes.length - 1]);
+			distance += distances.getDistance(oldNodes[oldNodes.length - 1], oldNodes[second]);
+		} else {
+			distance -= distances.getDistance(oldNodes[first - 1], oldNodes[first]);
+			distance += distances.getDistance(oldNodes[first - 1], oldNodes[second]);
+		}
+
+		if (second == oldNodes.length - 1) {
+			distance -= distances.getDistance(oldNodes[second], oldNodes[0]);
+			distance += distances.getDistance(oldNodes[first], oldNodes[0]);
+		} else {
+			distance -= distances.getDistance(oldNodes[second], oldNodes[second + 1]);
+			distance += distances.getDistance(oldNodes[first], oldNodes[second + 1]);
+		}
+
+		// int distance = 0;
 
 		for (int i = 0; i <= first - 1; i++) {
 			newNodePath[i] = oldNodes[i];
 
-			if (i != 0) {
-				// distance += distances[newNodePath[i].number][newNodePath[i +
-				// 1].number];
-				distance += distances.getDistance(newNodePath[i], newNodePath[i - 1]);
-			}
+			// if (i != 0) {
+			//
+			// distance += distances.getDistance(newNodePath[i], newNodePath[i -
+			// 1]);
+			// }
 
 		}
 
@@ -74,56 +132,155 @@ public class TwoOpt {
 			node = oldNodes[i];
 			newNodePath[j] = node;
 
-			// distance += distances[(node.number)][(newNodePath[i -
-			// 1].number)];
-
-			if (i != 0 && j != 0) {
-				if (newNodePath[j - 1] == null) {
-					String hString = "";
-				} else {
-					distance += distances.getDistance(node, newNodePath[j - 1]);
-				}
-			}
-
-			// if (i == first) {
-			// if (second == oldNodes.length - 1) {
-			// // newNodePath[j].distanceToNext = 0;
-			// distance += 0;
+			// if (i != 0 && j != 0) {
+			// if (newNodePath[j - 1] == null) {
+			// String hString = "";
 			// } else {
-			// // newNodePath[j].distanceToNext =
-			// // (oldPath.calculateDistanceBetweenNodes(oldNodes[i],
-			// // oldNodes[second + 1]));
-			//
-			// distance += distances.getDistance(oldNodes[i], oldNodes[second +
-			// 1]);
-			//
-			// // distance += distances[]
+			// distance += distances.getDistance(node, newNodePath[j - 1]);
 			// }
-			// } else if (i == 0) {
-			// // newNodePath[j].distanceToNext = i;
-			// distance += 0;
-			// } else {
-			// // newNodePath[j].distanceToNext = (oldNodes[i -
-			// // 1].distanceToNext);
-			// distance += distances.getDistance(oldNodes[i], oldNodes[i + 1]);
 			// }
+
 			j++;
 		}
 
 		for (int i = second + 1; i < oldNodes.length; i++) {
 			newNodePath[i] = oldNodes[i];
 
-			// if (i != oldNodes.length - 1) {
-			// distance += distances[(newNodePath[i].number)][(newNodePath[i -
-			// 1].number)];
-			distance += distances.getDistance(newNodePath[i], newNodePath[i - 1]);
-			// }
+			// distance += distances.getDistance(newNodePath[i], newNodePath[i -
+			// 1]);
 		}
 
 		Path newPath = new Path(newNodePath);
 		newPath.distance = distance;
 
 		return newPath;
+	}
+
+	private boolean twoOptSwap3(Path oldPath, int first, int second, int[][] distances) {
+
+		if (isNewDistanceShorter(first, second, oldPath, distances)) {
+
+			redrawPath(oldPath, first, second);
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private void redrawPath(Path oldPath, int first, int second) {
+
+		Node[] nodes = oldPath.nodes;
+
+		Node[] test = Arrays.copyOfRange(nodes, first, second + 1);
+
+		int q = test.length - 1;
+
+		int j = first;
+		for (int i = test.length - 1; i >= 0; i--) {
+			nodes[j] = test[i];
+			j++;
+
+		}
+
+		oldPath.distance += newDistance - oldDistance;
+	}
+
+	int	newDistance;
+	int	oldDistance;
+
+	private boolean isNewDistanceShorter(int first, int second, Path oldPath, int[][] distances) {
+
+		Node[] nodes = oldPath.nodes;
+
+		int lastNode = nodes.length - 1;
+
+		if (first == 0 && (second == lastNode || second == lastNode - 1)) {
+			// no changes
+			return false;
+		}
+
+		int beforeFirst = first - 1;
+		if (first == 0) {
+			beforeFirst = lastNode;
+		}
+
+		int afterLast = second + 1;
+
+		if (second == lastNode) {
+			afterLast = 0;
+		}
+
+		int oldDistance = distances[nodes[first].number][nodes[beforeFirst].number]
+				+ distances[nodes[second].number][nodes[afterLast].number];
+		int newDistance = distances[nodes[beforeFirst].number][nodes[second].number]
+				+ distances[nodes[first].number][nodes[afterLast].number];
+
+		if (newDistance < oldDistance) {
+			this.oldDistance = oldDistance;
+			this.newDistance = newDistance;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean twoOptSwap2(Path oldPath, int first, int second, DistanceHolder distances) {
+
+		int oldDistance = oldPath.distance;
+
+		int distance = oldPath.distance;
+
+		Node[] nodes = oldPath.nodes;
+		Node[] newNodePath = new Node[nodes.length];
+
+		// if (first == 0 && (second == nodes.length - 1 || second ==
+		// nodes.length - 2)) {
+		// // no changes
+		// return false;
+		// }
+
+		if (first == 0) {
+			distance -= distances.getDistance(nodes[first], nodes[nodes.length - 1]);
+			distance += distances.getDistance(nodes[nodes.length - 1], nodes[second]);
+		} else {
+			distance -= distances.getDistance(nodes[first - 1], nodes[first]);
+			distance += distances.getDistance(nodes[first - 1], nodes[second]);
+		}
+
+		if (second == nodes.length - 1) {
+			distance -= distances.getDistance(nodes[second], nodes[0]);
+			distance += distances.getDistance(nodes[first], nodes[0]);
+		} else {
+			distance -= distances.getDistance(nodes[second], nodes[second + 1]);
+			distance += distances.getDistance(nodes[first], nodes[second + 1]);
+		}
+
+		if (distance < oldDistance) {
+
+			Node[] test = new Node[second - first + 1];
+
+			int q = 0;
+			for (int i = second; i >= first; i--) {
+				test[q] = nodes[i];
+				q++;
+			}
+
+			int j = 0;
+			for (int i = first; i <= second; i++) {
+				nodes[i] = test[j];
+				j++;
+
+			}
+
+			oldPath.distance = distance;
+
+			// printPathToSystemErr(oldPath);
+
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private void printPathToSystemErr(Path path) {

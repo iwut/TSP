@@ -35,6 +35,7 @@ public class GreedyAlgorithm implements Algorithm {
 		}
 
 		Path greedyPath = new Path(path);
+		// pathLength += distances.getDistance(path[length - 1], path[0]);
 		greedyPath.distance = pathLength;
 
 		return greedyPath;

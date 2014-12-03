@@ -11,9 +11,7 @@ public class DistanceHolder {
 		int distance;
 		for (int i = 0; i < nodeAmount; i++) {
 			for (int j = i + 1; j < nodeAmount; j++) {
-				if (i == j) {
-					distances[i][j] = 0;
-				} else {
+				if (i != j) {
 
 					distance = calculateDistanceBetweenNodes(nodes[i], nodes[j]);
 
