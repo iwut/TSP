@@ -63,6 +63,11 @@ public class TwoOpt {
 	}
 
 	private void redrawPath(Path oldPath, int first, int second) {
+		if (first > second) {
+			int tmp = first;
+			first = second;
+			second = tmp;
+		}
 
 		Node[] nodes = oldPath.nodes;
 

@@ -59,7 +59,7 @@ public class ThreeOpt {
 								search = true;
 								twoOpt.forceSwap(path, i, j, distances);
 								twoOpt.forceSwap(path, i+k, m, distances);
-								path = newPath;
+//								path = newPath;
 								continue outerloop;
 								
 //								make(i, j)
