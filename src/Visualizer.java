@@ -81,6 +81,7 @@ class Visualizer extends JPanel {
         if(cities!=null){
 	    	synchronized (cities) {
 	    		
+	    		
 	    		if(this.path != null){
 					for (int i = 0; i < path.length; i++) {
 						drawpath(g, i);

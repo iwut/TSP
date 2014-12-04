@@ -1,18 +1,21 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 public class Main {
 
 	// Visualizer visual;
-	private boolean	VISUALIZE	= false;
+	private boolean VISUALIZE = false;
+	private Visualizer visual;
 
 	public static void main(String[] args) {
 		new Main();
 	}
 
 	public class NodePath {
-		public int[]	path;
-		public int		distance;
+		public int[] path;
+		public int distance;
+	
 
 		public NodePath(int[] path, int distance) {
 			this.path = path;
@@ -38,25 +41,50 @@ public class Main {
 
 		distanceHolder.calculateDistances(path);
 
-		// Node[] nodes = in.readIndata(br);
+//		Path path = in.readIndata(br);
 
-		// if(System.currentTimeMillis()-starttime>500){
-		// VISUALIZE = true;
-		// }
+		if (System.currentTimeMillis() - starttime > 500) {
+			VISUALIZE = true;
+		}
 
-		// if (VISUALIZE) {
-		// visual = Visualizer.createAndShowGUI(path);
-		// }
+		if (VISUALIZE) {
+			visual = Visualizer.createAndShowGUI(path);
+		}
+		
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		// Path path = new Path(nodes);
+//		Path path = new Path(nodes);
 
 		Algorithm algorithm = new GreedyAlgorithm();
 
 		path = algorithm.findPath(path, distanceHolder);
 
 		TwoOpt twoOpt = new TwoOpt();
+		
+
 
 		path = twoOpt.optimizePath2(path, distanceHolder.distances);
+		
+		if (VISUALIZE) {
+			visual = Visualizer.createAndShowGUI(path);
+		}
+
+		// path = algorithm.findPath(path, distanceHolder);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		visual.updatePath(path);
+		ThreeOpt threeOpt = new ThreeOpt(visual, VISUALIZE, twoOpt);
+
+		path = threeOpt.optimizePath(path, distanceHolder.distances);
 
 		// if (VISUALIZE) {
 		// // System.out.print(visual);
