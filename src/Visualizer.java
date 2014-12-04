@@ -169,7 +169,7 @@ class Visualizer extends JPanel {
     public static Visualizer createAndShowGUI(Path cities) {
         JFrame mainFrame = new JFrame();
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Visualizer animationPanel = new Visualizer(cities);
+        final Visualizer animationPanel = new Visualizer(cities);
         mainFrame.add(animationPanel);
         mainFrame.pack();
         mainFrame.setVisible(true);

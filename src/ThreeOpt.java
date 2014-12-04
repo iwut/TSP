@@ -33,7 +33,7 @@ public class ThreeOpt {
 			nodes = path.nodes;
 			for (int i = 0; i+1 < nodes.length; i++) {
 				for (int j = i+1; (j+1 < nodes.length)&&(j!=i); j++) {
-					for (int k = 0; (k < 1); k++) {
+					for (int k = 0; (k <= 1); k++) {
 						for (int m = 0; (m+1 < nodes.length)&&(m!=j)&&(m!=i); m++) {
 							//i = starting node one
 							//j = starting node two

@@ -25,11 +25,11 @@ public class Main {
 
 	public Main() {
 
-		long starttime = System.currentTimeMillis();
+//		long starttime = System.currentTimeMillis();
+//
+//		Kattio io;
 
-		Kattio io;
-
-		io = new Kattio(System.in);
+//		io = new Kattio(System.in);
 
 		InputReader in = new InputReader();
 
@@ -43,20 +43,20 @@ public class Main {
 
 //		Path path = in.readIndata(br);
 
-		if (System.currentTimeMillis() - starttime > 500) {
-			VISUALIZE = true;
-		}
+//		if (System.currentTimeMillis() - starttime > 500) {
+//			VISUALIZE = true;
+//		}
 
-		if (VISUALIZE) {
-			visual = Visualizer.createAndShowGUI(path);
-		}
+//		if (VISUALIZE) {
+//			visual = Visualizer.createAndShowGUI(path);
+//		}
 		
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(500);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 //		Path path = new Path(nodes);
 
@@ -68,23 +68,23 @@ public class Main {
 		
 
 
-		path = twoOpt.optimizePath2(path, distanceHolder.distances);
+		path = twoOpt.optimizePath(path, distanceHolder.distances);
 		
-		if (VISUALIZE) {
-			visual = Visualizer.createAndShowGUI(path);
-		}
+//		if (VISUALIZE) {
+//			visual = Visualizer.createAndShowGUI(path);
+//		}
 
-		// path = algorithm.findPath(path, distanceHolder);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		visual.updatePath(path);
-		ThreeOpt threeOpt = new ThreeOpt(visual, VISUALIZE, twoOpt);
+//		// path = algorithm.findPath(path, distanceHolder);
+//		try {
+//			Thread.sleep(500);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		visual.updatePath(path);
+//		ThreeOpt threeOpt = new ThreeOpt(visual, VISUALIZE, twoOpt);
 
-		path = threeOpt.optimizePath(path, distanceHolder.distances);
+//		path = threeOpt.optimizePath(path, distanceHolder.distances);
 
 		// if (VISUALIZE) {
 		// // System.out.print(visual);
