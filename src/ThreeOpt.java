@@ -55,7 +55,7 @@ public class ThreeOpt {
 								newPath = twoOptSwap(path, i, j, distances);
 								newPath = twoOptSwap(newPath, i+k, m, distances);
 								path = newPath;
-								continue outerloop;
+								
 								
 //								make(i, j)
 //								make(i+1, j+1)
@@ -65,15 +65,17 @@ public class ThreeOpt {
 //								make(j+k, m+1)
 //								reverse(m, j+1)
 								
-//								if(b){
-////									try {
-////										Thread.sleep(1);
-//										//v.updatePath(path);
-////									} catch (InterruptedException e) {
-////										// TODO Auto-generated catch block
-////										e.printStackTrace();
-////									}
-//								}
+								if(b){
+//									try {
+//										Thread.sleep(1);
+										v.updatePath(path);
+//									} catch (InterruptedException e) {
+//										// TODO Auto-generated catch block
+//										e.printStackTrace();
+//									}
+								}
+								System.out.println("Optimized path");
+								//continue outerloop;
 							}else{
 								skipped++;
 								continue;

@@ -62,7 +62,7 @@ class Visualizer extends JPanel {
             x++;
             x = x%10;
             try {
-                Thread.sleep(500);
+                Thread.sleep(10);
             }
             catch (Exception e) {
             }
