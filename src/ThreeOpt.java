@@ -5,6 +5,8 @@ public class ThreeOpt {
 	boolean bool;
 	TwoOpt3 twoOpt;
 	
+	int[][] distances = null;
+	
 	public ThreeOpt(Visualizer v, boolean b, TwoOpt3 twoOpt){
 		this.v = v;
 		this.bool = b;
@@ -12,6 +14,39 @@ public class ThreeOpt {
 	}
 	public Path optimizePath(Path path, int[][] distances) {
 
+		
+		Node[] testNodes = new Node[5];
+		
+		testNodes[0] = new Node(1.0, 1.0, 0, 0.0);
+		testNodes[1] = new Node(2.0, 1.0, 1, 0.0);
+		testNodes[2] = new Node(3.0, 1.0, 2, 0.0);
+		testNodes[3] = new Node(4.0, 1.0, 3, 0.0);
+		testNodes[4] = new Node(5.0, 1.0, 4, 0.0);
+		
+		Path testpath = new Path(testNodes);
+		DistanceHolder x = new DistanceHolder();
+		(x).calculateDistances(testpath);
+		this.distances = x.distances;
+		
+		for (int i = 0; i < testNodes.length; i++) {
+			System.out.println(testNodes[i].getNumber());
+		}
+		
+		
+		doThreeSwap(1, 2, 0, 0, testpath, true);
+		//doThreeSwap(0, 1, 2, 1, testpath, true);
+		
+		testNodes = testpath.getNodes();
+		for (int i = 0; i < testNodes.length; i++) {
+			System.out.println(testNodes[i].getNumber());
+		}
+		
+		
+		
+		
+		
+		
+		this.distances = distances;
 		// int[][] distances = distanceHolder.distances;
 
 		Node[] nodes = path.nodes;
@@ -41,270 +76,10 @@ public class ThreeOpt {
 							//m = starting node three
 							if(i!=j&&i!=m&&j!=m){
 								
+								boolean b = doThreeSwap(i, j, m, k, path, false);
 								
-								int avar,bvar,cvar;
-								if(i<j){
-									avar = i;
-									bvar = j;
-									cvar = m;
-								}else{
-									avar = j;
-									bvar = i;
-									cvar = m;
-								}
-								
-								
-								int aLeft = (avar-1+nodes.length)%nodes.length;
-								int aRight = (avar+1+nodes.length)%nodes.length;
-								
-								int bLeft = (bvar-1+nodes.length)%nodes.length;
-								int bRight = (bvar+1)%nodes.length;
-								
-								int cLeft = (cvar-1+nodes.length)%nodes.length;
-								int cRight = (cvar+1+nodes.length)%nodes.length;
-								
-								int temp = 0;
-								
-								
-								int a = avar;
-								int b = bvar;
-								int c = cvar;
-								
-								int a1 = aLeft;
-								int a2 = aRight;
-								
-								int b1 = bLeft;
-								int b2 = bRight;
-								
-								int c1 = cLeft;
-								int c2 = cRight;
-								
-								int interval = j-i;
-								int start = i;
-//								int cFlipped = start+(interval-c);
-
-
-								int distance = 0;
-								
-								int distance2 = 0;
-								System.out.println("Starting...");
-								if(a>c){
-									if(k==0){
-										System.out.println("Case1");
-										distance += distances[nodes[c1].number][nodes[cvar].number];
-										distance += distances[nodes[a1].number][nodes[avar].number];
-										distance += distances[nodes[bvar].number][nodes[b2].number];
-										
-										b = avar;
-										a = bvar;
-										b1 = aRight;
-										a2 = bLeft;
-										
-										temp = a;
-										a = c;
-										c = temp;
-										
-										temp = a2;
-										a2 = c2;
-										c2 = temp;
-										
-										b1 = cvar+((bvar-cvar)-b1);//invertedb1;
-										b = cvar+((bvar-cvar)-b);//invertedb;
-										a1 = cvar+((bvar-cvar)-a1);//inverteda1;
-										
-										distance2 += distances[nodes[a1].number][nodes[a].number];
-										distance2 += distances[nodes[b2].number][nodes[c].number];
-										distance2 += distances[nodes[c1].number][nodes[a].number];
-										
-									}
-									else{
-										//IMPOSSIBLE, SINCE IT WOULD YIELD 4 NEW EDGES
-//										distance += distances[nodes[c1].number][nodes[cvar].number];
-//										distance += distances[nodes[b1].number][nodes[bvar].number];
-//										distance += distances[nodes[a1].number][nodes[avar].number];
-//										
-//										b = avar;
-//										b1 = aRight;
-//										a2 = bLeft;
-//										a = bvar;
-//										
-//										temp = c;
-//										c = b;
-//										b = temp;
-//										
-//										temp = a1;
-//										a1 = c2;
-//										c2 = temp;
-//										
-//										distance2 += distances[nodes[c1].number][nodes[b].number];
-//										distance2 += distances[nodes[b].number][nodes[a1].number];
-//										distance2 += distances[nodes[c].number][nodes[b2].number];
-									}
-								}else if(b>c){
-//									c = a+((b-a)-c); //flip c between a and b
-//									cLeft = a+((b-a)-cLeft);
-//									cRight = a+((b-a)-cRight);
-									
-									if(k==0){
-										System.out.println("Case2");
-										distance += distances[nodes[a1].number][nodes[avar].number];
-										distance += distances[nodes[b2].number][nodes[bvar].number];
-										distance += distances[nodes[c2].number][nodes[cvar].number];
-										//a1 unchanged
-										b = avar;
-										b1 = aRight;
-										c2 = avar+((bvar-avar)-c2);//invertedc2;
-										c = avar+((bvar-avar)-c);//invertedc;
-										c1 = avar+((bvar-avar)-c1);//invertedc1;
-										a2 = bLeft;
-										a = bvar;
-										
-										temp = a;
-										a = c;
-										c = a;
-										
-										temp = a2;
-										a2 = c1;
-										c1 = temp;
-										//b2 unchanged
-										distance2 += distances[nodes[a1].number][nodes[a].number];
-										distance2 += distances[nodes[b2].number][nodes[b].number];
-										distance2 += distances[nodes[c2].number][nodes[c].number];
-									}
-									else{
-										System.out.println("Case3");
-										distance += distances[nodes[a1].number][nodes[avar].number];
-										distance += distances[nodes[b2].number][nodes[bvar].number];
-										distance += distances[nodes[c1].number][nodes[cvar].number];
-										
-										b = avar;
-										b1 = aRight;
-										c2 = avar+((bvar-avar)-c2);//invertedc2;
-										c = avar+((bvar-avar)-c);//invertedc;
-										c1 = avar+((bvar-avar)-c1);//invertedc1;
-										a2 = bLeft;
-										a = bvar;
-										
-										temp = c;
-										c = b;
-										b = temp;
-										
-										temp = c2;
-										c2 = b1;
-										b1 = temp;
-										
-										distance2 += distances[nodes[a1].number][nodes[a].number];
-										distance2 += distances[nodes[b2].number][nodes[b].number];
-										distance2 += distances[nodes[c1].number][nodes[c].number];
-									}
-								} else{
-									if(k==0){
-										//IMPOSSIBLE, SINCE IT WOULD YIELD 4 NEW EDGES
-//										b = avar;
-//										b1 = aRight;
-//										a2 = bLeft;
-//										a = bvar;
-//										
-//										temp = c;
-//										c = a;
-//										a = temp;
-//										
-//										temp = c1;
-//										c1 = b2;
-//										b2 = temp;
-										
-									}
-									else{//A-B, B-C
-										System.out.println("Case4");
-										
-										System.out.println("1Indexes: a:" + a + ",  b:" + b + ",  c:" + c);
-										
-										int anum = nodes[avar].number;
-										int bnum = nodes[bvar].number;
-										int cnum = nodes[cvar].number;
-										
-										distance += distances[nodes[a1].number][nodes[avar].number];
-										distance += distances[nodes[b2].number][nodes[bvar].number];
-										distance += distances[nodes[c2].number][nodes[cvar].number];
-										
-										//a1 unchanged
-										b = avar;
-										b1 = aRight;
-										a2 = bLeft;
-										a = bvar;
-										
-										temp = c;
-										c = b;
-										b = temp;
-										
-										temp = c1;
-										c1 = b1;
-										b1 = temp;
-										
-										b2 = avar+((cvar-avar)-b2);//invertedb2;
-										a = avar+((cvar-avar)-a);//inverteda;
-										a2 = avar+((cvar-avar)-a2);//inverteda2;
-										
-										distance2 += distances[nodes[a1].number][nodes[a].number];
-										distance2 += distances[nodes[b2].number][nodes[b].number];
-										distance2 += distances[nodes[c2].number][nodes[c].number];
-										
-
-										int a2num = nodes[a].number;
-										int b2num = nodes[b].number;
-										int c2num = nodes[c].number;
-										
-										System.out.println("2Indexes: a:" + a + ",  b:" + b + ",  c:" + c);
-										
-										if(distance>distance2){
-											System.out.print("");
-										}
-									}
-								}
-								
-								if(distance>distance2){
-									System.out.println("Swapping A:" + path.nodes[avar].number + ", B:" + path.nodes[bvar].number + ", C:" + path.nodes[cvar].number);
-									search = true;
-									int originalDist = path.distance;
-									twoOpt.forceSwap(path, avar, bvar, distances);
-									
-									System.out.println("Swapping A:" + path.getNodes()[avar].number + ", B:" + path.getNodes()[bvar].number + ", C:" + path.getNodes()[cvar].number);
-									
-									if(k==0){
-										twoOpt.forceSwap(path, a, b, distances);
-									}else{
-										twoOpt.forceSwap(path, b, c, distances);
-									}
-									int doneDist = path.distance;
-									System.out.println("Swapping A:" + path.getNodes()[avar].number + ", B:" + path.getNodes()[bvar].number + ", C:" + path.getNodes()[cvar].number);
-									
-									
-									System.out.println("Calculated diff: " + (distance-distance2) + "  Actual diff:" + (originalDist-doneDist));
-	//								path = newPath;
-									
-									
-	//								make(i, j)
-	//								make(i+1, j+1)
-	//								reverse(i+1, j)
-	//								
-	//								make(i+k, m)
-	//								make(j+k, m+1)
-	//								reverse(m, j+1)
-									
-									if(bool){
-										v.updatePath(path);
-	//									try {
-	//										//Thread.sleep(1);
-	//										
-	//									} catch (InterruptedException e) {
-	//										// TODO Auto-generated catch block
-	//										e.printStackTrace();
-	//									}
-									}
+								if(b){
 									continue outerloop;
-								}else{
-									skipped++;
-									continue;
 								}
 							}
 							
@@ -322,6 +97,288 @@ public class ThreeOpt {
 		
 	}
 
+	
+	private boolean doThreeSwap(int i, int j, int m, int k, Path path, boolean force){
+		Node[] nodes = path.nodes;
+		int avar,bvar,cvar;
+		if(i<j){
+			avar = i;
+			bvar = j;
+			cvar = m;
+		}else{
+			avar = j;
+			bvar = i;
+			cvar = m;
+		}
+		
+		
+		int aLeft = (avar-1+nodes.length)%nodes.length;
+		int aRight = (avar+1+nodes.length)%nodes.length;
+		
+		int bLeft = (bvar-1+nodes.length)%nodes.length;
+		int bRight = (bvar+1+nodes.length)%nodes.length;
+		
+		int cLeft = (cvar-1+nodes.length)%nodes.length;
+		int cRight = (cvar+1+nodes.length)%nodes.length;
+		
+		int temp = 0;
+		
+		
+		int a = avar;
+		int b = bvar;
+		int c = cvar;
+		
+		int a1 = aLeft;
+		int a2 = aRight;
+		
+		int b1 = bLeft;
+		int b2 = bRight;
+		
+		int c1 = cLeft;
+		int c2 = cRight;
+		
+		int interval = j-i;
+		int start = i;
+//		int cFlipped = start+(interval-c);
+
+
+		int distance = 0;
+		
+		int distance2 = 0;
+		System.out.println("Starting...");
+		if(a>c){
+			if(k==0){
+				System.out.println("Case1");
+				distance += distances[nodes[c1].number][nodes[cvar].number];
+				distance += distances[nodes[a1].number][nodes[avar].number];
+				distance += distances[nodes[bvar].number][nodes[b2].number];
+				
+				b = avar;
+				a = bvar;
+				b1 = aRight;
+				a2 = bLeft;
+				
+				temp = a;
+				a = c;
+				c = temp;
+				
+				temp = a2;
+				a2 = c2;
+				c2 = temp;
+				
+				b1 = cvar+((bvar-cvar)-b1);//invertedb1;
+				b = cvar+((bvar-cvar)-b);//invertedb;
+				a1 = cvar+((bvar-cvar)-a1);//inverteda1;
+				
+				distance2 += distances[nodes[a1].number][nodes[a].number];
+				distance2 += distances[nodes[b2].number][nodes[c].number];
+				distance2 += distances[nodes[c1].number][nodes[a].number];
+				
+			}
+			else{//C A B / k=1
+				System.out.println("Swapping Skipped.");
+				//IMPOSSIBLE, SINCE IT WOULD YIELD 4 NEW EDGES
+//				distance += distances[nodes[c1].number][nodes[cvar].number];
+//				distance += distances[nodes[b1].number][nodes[bvar].number];
+//				distance += distances[nodes[a1].number][nodes[avar].number];
+//				
+//				b = avar;
+//				b1 = aRight;
+//				a2 = bLeft;
+//				a = bvar;
+//				
+//				temp = c;
+//				c = b;
+//				b = temp;
+//				
+//				temp = a1;
+//				a1 = c2;
+//				c2 = temp;
+//				
+//				distance2 += distances[nodes[c1].number][nodes[b].number];
+//				distance2 += distances[nodes[b].number][nodes[a1].number];
+//				distance2 += distances[nodes[c].number][nodes[b2].number];
+			}
+		}else if(b>c){
+//			c = a+((b-a)-c); //flip c between a and b
+//			cLeft = a+((b-a)-cLeft);
+//			cRight = a+((b-a)-cRight);
+			
+			if(k==0){
+				System.out.println("Case2");
+				distance += distances[nodes[a1].number][nodes[avar].number];
+				distance += distances[nodes[b2].number][nodes[bvar].number];
+				distance += distances[nodes[c2].number][nodes[cvar].number];
+				//a1 unchanged
+				b = avar;
+				b1 = aRight;
+				c2 = avar+((bvar-avar)-c2);//invertedc2;
+				c = avar+((bvar-avar)-c);//invertedc;
+				c1 = avar+((bvar-avar)-c1);//invertedc1;
+				a2 = bLeft;
+				a = bvar;
+				
+				temp = a;
+				a = c;
+				c = a;
+				
+				temp = a2;
+				a2 = c1;
+				c1 = temp;
+				//b2 unchanged
+				distance2 += distances[nodes[a1].number][nodes[a].number];
+				distance2 += distances[nodes[b2].number][nodes[b].number];
+				distance2 += distances[nodes[c2].number][nodes[c].number];
+			}
+			else{
+				System.out.println("Case3");
+				distance += distances[nodes[a1].number][nodes[avar].number];
+				distance += distances[nodes[b2].number][nodes[bvar].number];
+				distance += distances[nodes[c1].number][nodes[cvar].number];
+				
+				b = avar;
+				b1 = aRight;
+				c2 = avar+((bvar-avar)-c2);//invertedc2;
+				c = avar+((bvar-avar)-c);//invertedc;
+				c1 = avar+((bvar-avar)-c1);//invertedc1;
+				a2 = bLeft;
+				a = bvar;
+				
+				temp = c;
+				c = b;
+				b = temp;
+				
+				temp = c2;
+				c2 = b1;
+				b1 = temp;
+				
+				distance2 += distances[nodes[a1].number][nodes[a].number];
+				distance2 += distances[nodes[b2].number][nodes[b].number];
+				distance2 += distances[nodes[c1].number][nodes[c].number];
+			}
+		} else{
+			if(k==0){
+				//IMPOSSIBLE, SINCE IT WOULD YIELD 4 NEW EDGES
+//				b = avar;
+//				b1 = aRight;
+//				a2 = bLeft;
+//				a = bvar;
+//				
+//				temp = c;
+//				c = a;
+//				a = temp;
+//				
+//				temp = c1;
+//				c1 = b2;
+//				b2 = temp;
+				System.out.println("A B C / k=0 Swapping Skipped.");
+			}
+			else{//A-B, B-C
+				System.out.println("Case4");
+				
+				System.out.println("1Indexes: a:" + a + ",  b:" + b + ",  c:" + c);
+				
+				int anum = nodes[avar].number;
+				int bnum = nodes[bvar].number;
+				int cnum = nodes[cvar].number;
+				
+				distance += distances[nodes[a1].number][nodes[avar].number];
+				distance += distances[nodes[b2].number][nodes[bvar].number];
+				distance += distances[nodes[c2].number][nodes[cvar].number];
+				
+				//a1 unchanged
+				b = avar;
+				b1 = aRight;
+				a2 = bLeft;
+				a = bvar;
+				
+				temp = c;
+				c = b;
+				b = temp;
+				
+				temp = c1;
+				c1 = b1;
+				b1 = temp;
+				
+				b2 = avar+((cvar-avar)-b2);//invertedb2;
+				a = avar+((cvar-avar)-a);//inverteda;
+				a2 = avar+((cvar-avar)-a2);//inverteda2;
+				
+				System.out.println("Indexes: a1:" + a1 + ", c:" + c + ", c1:" + c1 + ", b2:" + b2 + ", a:" + a + ", a2:" + a2 + ", b1:" + b1 + ", b:" + b + ", c2:" + c2);
+				
+				distance2 += distances[nodes[a1].number][nodes[a].number];
+				distance2 += distances[nodes[b2].number][nodes[b].number];
+				distance2 += distances[nodes[c2].number][nodes[c].number];
+				
+
+				int a2num = nodes[a].number;
+				int b2num = nodes[b].number;
+				int c2num = nodes[c].number;
+				
+				System.out.println("2Indexes: a:" + a + ",  b:" + b + ",  c:" + c);
+				
+				if(distance>distance2){
+					System.out.print("");
+				}
+			}
+		}
+		
+		if(distance>distance2||force){
+			System.out.println("Swapping A:" + path.nodes[avar].number + ", B:" + path.nodes[bvar].number + ", C:" + path.nodes[cvar].number);
+			
+			int originalDist = path.distance;
+			twoOpt.forceSwap(path, avar, bvar, distances);
+			
+			System.out.println("Swapping A:" + path.getNodes()[avar].number + ", B:" + path.getNodes()[bvar].number + ", C:" + path.getNodes()[cvar].number);
+			
+			if(k==0){
+				if(a>b){
+					temp = a;
+					a = b;
+					b = temp;
+				}
+				twoOpt.forceSwap(path, a, b, distances);
+			}else{
+				if(c>b){
+					temp = c;
+					c = b;
+					b = temp;
+				}
+				twoOpt.forceSwap(path, b, c, distances);
+			}
+			int doneDist = path.distance;
+			System.out.println("Swapping A:" + path.getNodes()[avar].number + ", B:" + path.getNodes()[bvar].number + ", C:" + path.getNodes()[cvar].number);
+			
+			
+			System.out.println("Calculated diff: " + (distance-distance2) + "  Actual diff:" + (originalDist-doneDist));
+//								path = newPath;
+			
+			
+//								make(i, j)
+//								make(i+1, j+1)
+//								reverse(i+1, j)
+//								
+//								make(i+k, m)
+//								make(j+k, m+1)
+//								reverse(m, j+1)
+			
+			if(bool){
+				v.updatePath(path);
+//									try {
+//										//Thread.sleep(1);
+//										
+//									} catch (InterruptedException e) {
+//										// TODO Auto-generated catch block
+//										e.printStackTrace();
+//									}
+			}
+			return true;
+		}else{
+
+			return false;
+		}
+	}
+	
 	private void printPathToSystemErr(Path path) {
 		Node[] nodes = path.nodes;
 

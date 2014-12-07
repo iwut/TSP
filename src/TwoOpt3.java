@@ -55,15 +55,15 @@ public class TwoOpt3 {
 
 					afterSecond = (second + 1) % nodesLength;
 
-					try {
+//					try {
 					redrawPath(path, first, second);
 
 					path.distance += distances[nodes[first].number][nodes[second].number]
 							+ distances[nodes[first + 1].number][nodes[afterSecond].number]
 							- distances[nodes[first].number][nodes[first + 1].number] - distances[nodes[second].number][nodes[afterSecond].number];
-					} catch (ArrayIndexOutOfBoundsException e) {
-						// do nothing
-					}
+//					} catch (ArrayIndexOutOfBoundsException e) {
+//						// do nothing
+//					}
 				}
 			}
 		} while ((System.nanoTime() - Main.startTime) < RUN_TIME_IN_NANOSECONDS);
@@ -83,15 +83,15 @@ public class TwoOpt3 {
 		
 		int afterSecond = (second + 1) % nodesLength;
 
-		try {
+		//try {
 		redrawPath(path, first, second);
 
 		path.distance += distances[nodes[first].number][nodes[second].number]
 				+ distances[nodes[first + 1].number][nodes[afterSecond].number]
 				- distances[nodes[first].number][nodes[first + 1].number] - distances[nodes[second].number][nodes[afterSecond].number];
-		} catch (ArrayIndexOutOfBoundsException e) {
-			// do nothing
-		}
+//		} catch (ArrayIndexOutOfBoundsException e) {
+//			// do nothing
+//		}
 	}
 
 	

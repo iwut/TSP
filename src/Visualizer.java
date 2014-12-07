@@ -152,7 +152,6 @@ class Visualizer extends JPanel {
     			(int)(SCALE*y1)-(CITY_RADIUS/2), 
     			CITY_RADIUS, 
     			CITY_RADIUS);
-
     }
     
     public void updatePath(Path newPath){
