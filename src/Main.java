@@ -68,7 +68,7 @@ public class Main {
 		
 
 
-		path = twoOpt.optimizePath2(path, distanceHolder.distances);
+		//path = twoOpt.optimizePath2(path, distanceHolder.distances);
 		
 		if (VISUALIZE) {
 			visual = Visualizer.createAndShowGUI(path);
@@ -76,7 +76,7 @@ public class Main {
 
 		// path = algorithm.findPath(path, distanceHolder);
 		try {
-			Thread.sleep(500);
+			Thread.sleep(1500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
