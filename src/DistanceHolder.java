@@ -23,9 +23,11 @@ public class DistanceHolder {
 				}
 			}
 			intNodes[i] = nodes[i].number;
+			
 		}
 
 		path.intNodes = intNodes;
+		path.nodes = nodes;
 
 		this.distances = distances;
 	}

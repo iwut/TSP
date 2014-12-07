@@ -63,9 +63,9 @@ public class Main {
 
 		GreedyAlgorithm algorithm = new GreedyAlgorithm();
 
-		path = algorithm.findPath2(path, distanceHolder);
+		path = algorithm.findPath(path, distanceHolder);
 
-		TwoOpt2 twoOpt = new TwoOpt2();
+		TwoOpt3 twoOpt = new TwoOpt3();
 
 //		path = twoOpt.optimizePath2(path, distanceHolder.distances);
 		

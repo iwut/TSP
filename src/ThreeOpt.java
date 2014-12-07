@@ -3,9 +3,9 @@ import java.util.Random;
 public class ThreeOpt {
 	Visualizer v;
 	boolean bool;
-	TwoOpt2 twoOpt;
+	TwoOpt3 twoOpt;
 	
-	public ThreeOpt(Visualizer v, boolean b, TwoOpt2 twoOpt){
+	public ThreeOpt(Visualizer v, boolean b, TwoOpt3 twoOpt){
 		this.v = v;
 		this.bool = b;
 		this.twoOpt = twoOpt;
