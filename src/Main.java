@@ -65,9 +65,11 @@ public class Main {
 
 		path = algorithm.findPath2(path, distanceHolder);
 
-		TwoOpt twoOpt = new TwoOpt();
+		TwoOpt2 twoOpt = new TwoOpt2();
 
-		path = twoOpt.optimizePath2(path, distanceHolder.distances);
+//		path = twoOpt.optimizePath2(path, distanceHolder.distances);
+		
+		twoOpt.run(path, distanceHolder.distances);
 
 		// if (VISUALIZE) {
 		// visual = Visualizer.createAndShowGUI(path);
