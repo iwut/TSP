@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 public class Main {
 
 	// Visualizer visual;
-	private boolean		VISUALIZE	= false;
+	private boolean		VISUALIZE	= true;
 	private Visualizer	visual;
 
 	public static long	startTime;
@@ -48,9 +48,9 @@ public class Main {
 		// VISUALIZE = true;
 		// }
 
-		// if (VISUALIZE) {
-		// visual = Visualizer.createAndShowGUI(path);
-		// }
+		 if (VISUALIZE) {
+		 visual = Visualizer.createAndShowGUI(path);
+		 }
 
 		// try {
 		// Thread.sleep(500);
@@ -69,28 +69,28 @@ public class Main {
 
 //		path = twoOpt.optimizePath2(path, distanceHolder.distances);
 		
-		twoOpt.run(path, distanceHolder.distances);
+//		twoOpt.run(path, distanceHolder.distances);
 
 		// if (VISUALIZE) {
 		// visual = Visualizer.createAndShowGUI(path);
 		// }
 
-		// // path = algorithm.findPath(path, distanceHolder);
-		// try {
-		// Thread.sleep(500);
-		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// visual.updatePath(path);
-		// ThreeOpt threeOpt = new ThreeOpt(visual, VISUALIZE, twoOpt);
+		 // path = algorithm.findPath(path, distanceHolder);
+		 try {
+		 Thread.sleep(500);
+		 } catch (InterruptedException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 }
+		 visual.updatePath(path);
+		 ThreeOpt threeOpt = new ThreeOpt(visual, VISUALIZE, twoOpt);
 
-		// path = threeOpt.optimizePath(path, distanceHolder.distances);
+		 path = threeOpt.optimizePath(path, distanceHolder.distances);
 
-		// if (VISUALIZE) {
-		// // System.out.print(visual);
-		// visual.updatePath(path);
-		// }
+//		 if (VISUALIZE) {
+//		 // System.out.print(visual);
+//		 visual.updatePath(path);
+//		 }
 
 		printPath2(path);
 	}

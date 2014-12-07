@@ -81,6 +81,20 @@ public class TwoOpt {
 		System.err.println("Iterations: " + iterations);
 		return path;
 	}
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	private void randomSwapNodes(Path path, int[][] distances, int swaps) {
 

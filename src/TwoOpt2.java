@@ -69,6 +69,23 @@ public class TwoOpt2 {
 		} while ((System.nanoTime() - Main.startTime) < RUN_TIME_IN_NANOSECONDS);
 //		} while (iterations < ITERATIONS);
 	}
+	
+	public void forceSwap(Path path, int first, int second, int[][] distances) {
+		int[] nodes = path.intNodes;
+		int nodesLength = nodes.length;
+		
+		int afterSecond = (second + 1) % nodesLength;
+
+		try {
+		redrawPath(path, first, second);
+
+		path.distance += distances[nodes[first]][nodes[second]]
+				+ distances[nodes[first + 1]][nodes[afterSecond]]
+				- distances[nodes[first]][nodes[first + 1]] - distances[nodes[second]][nodes[afterSecond]];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			// do nothing
+		}
+	}
 
 	
 	
