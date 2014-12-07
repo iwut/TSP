@@ -8,6 +8,10 @@ public class Path {
 		this.nodes = nodes;
 	}
 
+	public Path(int[] nodes) {
+		this.intNodes = nodes;
+	}
+
 	public Node[] getNodes() {
 		return nodes;
 	}
